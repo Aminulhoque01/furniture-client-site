@@ -1,63 +1,66 @@
 import React, { useContext } from 'react';
+import { useForm } from 'react-hook-form';
 import { toast } from 'react-hot-toast';
 import { AuthContext } from '../../Context/AuthProvider';
 
-const OpenModal = ({products, setProducts}) => {
-    
-    const {user} =useContext(AuthContext);
-    const { name, sell_price, image_url } = products;
+const OpenModal = ({ products, setProducts }) => {
 
+    const { user } = useContext(AuthContext);
+    const { name, sell_price, image_url } = products;
+    const { register, setRegister } = useForm();
+ 
+    
     const handleSubmit = (event) => {
         event.preventDefault();
-        const form= event.target;
-
-        const items = form.items.target;
+        const form = event.target;
+        const items = form.items.value;
         const price = form.price.value;
         const image_url = form.image_url.value;
         const name = form.name.value;
         const email = form.email.value;
         const phone = form.phone.value;
         const location = form.location.value;
+        const select = form.select.value;
+        console.log(select)
 
-        
-        const booking={
+        const booking = {
             itemsName: items,
             image_url,
-            itemsPrice:price,
+            itemsPrice: price,
             name,
             email,
             phone,
             location,
+            select,
         }
-       
 
-        
-
-        fetch('http://localhost:5000/bookings',{
-            method:'POST',
-            headers:{
+        fetch('http://localhost:5000/bookings', {
+            method: 'POST',
+            headers: {
                 'content-type': 'application/json',
-            },
-            body:JSON.stringify(booking)
-        })
-        .then(res=>res.json())
-        .then(data=>{
-            console.log(data);
-            if(data.acknowledged){
-                setProducts(null);
-                toast.success('successfully booking');
-            }else{
-                toast.error(data.message);
-            }
-        })
 
+            },
+            body: JSON.stringify(booking)
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.acknowledged) {
+                    setProducts(null);
+                    toast.success('successfully booking');
+
+                } else {
+                    toast.error(data.message)
+                }
+
+            })
 
 
     }
 
     return (
 
-         <div>
+        <div>
             <input type="checkbox" id="open-modal" className="modal-toggle" />
             <div className="modal modal-bottom sm:modal-middle">
                 <div className="modal-box">
@@ -87,9 +90,17 @@ const OpenModal = ({products, setProducts}) => {
                         <input name='location' type="text" placeholder="Location" className="input w-full input-bordered" />
                         <br />
                         <br />
-
-                        <input className='btn btn-accent w-full max-w-xs' type="submit" />
-
+                        
+                          
+                            <select name='select'>
+                                <option value="Good">Good</option>
+                                <option value="Excellent">Excellent</option>
+                                <option value="Fair">Fair</option>
+                            </select>
+                            <br />
+                            <br />
+                            <input className='btn btn-accent w-full max-w-xs' type="submit" />
+                        
 
 
                     </form>

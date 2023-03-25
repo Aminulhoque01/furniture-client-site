@@ -1,16 +1,20 @@
 import React, { useContext, useState } from 'react';
 import { toast } from 'react-hot-toast';
-import { Form, Link } from 'react-router-dom';
+import { Form, Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 
 const Register = () => {
     const {createUser}= useContext(AuthContext);
 
     const [error,setError]= useState('');
-
+    const Navigate = useNavigate();
+  
+        Navigate('/')
+    
 
     const handleForm =(event)=>{
         event.preventDefault();
+
         const form = event.target;
         const name = form.name.value;
         const email =form.email.value;

@@ -1,4 +1,10 @@
 import { createBrowserRouter } from "react-router-dom";
+import AddProducts from "../../DashboardLayOut/AddProduct/AddProducts";
+import AllUser from "../../DashboardLayOut/AllUser/AllUser";
+import Dashboard from "../../DashboardLayOut/DashboardLayOut";
+import MyOrder from "../../DashboardLayOut/MyOrder/MyOrder";
+import Payment from "../../DashboardLayOut/Payment/Payment";
+import SellProducts from "../../DashboardLayOut/SellProduct/SellProducts";
 import Main from "../../layout/Main/Main";
 import SingleCategory from "../../pages/SingleCategory/SingleCategory";
 import ErrorPage from "../../sheard/errorPage/ErrorPage";
@@ -35,6 +41,34 @@ export const router = createBrowserRouter([
                 path: '/single_category/:id',
                 element: <SingleCategory></SingleCategory>,
                 loader: ({ params }) => fetch(`http://localhost:5000/product-category/${params.id}`)
+            }
+        ]
+    },
+    {
+        path:'/dashboard',
+        element:<Dashboard></Dashboard>,
+        errorElement:<ErrorPage></ErrorPage>,
+        children:[
+            {
+                path:'/dashboard',
+                element:<MyOrder></MyOrder>
+            },
+            {
+                path:'/dashboard/My-Products',
+                element:<AddProducts></AddProducts>
+            },
+            {
+                path:'/dashboard/mySellProduct',
+                element:<SellProducts></SellProducts>
+            },
+            {
+                path:'/dashboard/all-user',
+                element:<AllUser></AllUser>
+            },
+            {
+                path:'/dashboard/payment/:id',
+                element:<Payment></Payment>,
+                loader:({params})=>fetch('')
             }
         ]
     }
