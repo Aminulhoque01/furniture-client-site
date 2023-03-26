@@ -34,7 +34,7 @@ const OpenModal = ({ products, setProducts }) => {
             select,
         }
 
-        fetch('http://localhost:5000/bookings', {
+        fetch('https://furniture-server-site.vercel.app/bookings', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

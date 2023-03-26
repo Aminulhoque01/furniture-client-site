@@ -40,7 +40,7 @@ export const router = createBrowserRouter([
             {
                 path: '/single_category/:id',
                 element: <SingleCategory></SingleCategory>,
-                loader: ({ params }) => fetch(`http://localhost:5000/product-category/${params.id}`)
+                loader: ({ params }) => fetch(`https://furniture-server-site.vercel.app/product-category/${params.id}`)
             }
         ]
     },
